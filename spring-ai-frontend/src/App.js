@@ -8,7 +8,6 @@ function App() {
   const [activeTab, setActiveTab] = useState('image-generator');
 
   const handleTabChange = (tab) => {
-    //alert(tab);
     setActiveTab(tab);
   };
 
