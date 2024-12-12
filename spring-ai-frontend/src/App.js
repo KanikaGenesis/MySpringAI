@@ -1,39 +1,40 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import ImageGenerator from './components/ImageGenerator';
-import ChatComponent from './components/ChatComponent';
-import RecipeGenerator from './components/RecipeGenerator';
+import ImageGenerator  from './components/ImageGenerator';
+import ChatComponent  from './components/ChatComponent';
+import  RecipeGenerator from './components/RecipeGenerator';
 
-function App() {
+const App = () => {
   const [activeTab, setActiveTab] = useState('image-generator');
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
+  // Tabs configuration for scalability
+  const tabs = [
+    { id: 'image-generator', label: 'Image Generator', component: <ImageGenerator /> },
+    { id: 'chat', label: 'Ask AI', component: <ChatComponent /> },
+    { id: 'recipe-generator', label: 'Recipe Generator', component: <RecipeGenerator /> },
+  ];
 
   return (
     <div className="App">
-      <button className={activeTab === "image-generator" ? "active" : ""} 
-      onClick={() => handleTabChange("image-generator")}>
-        Image Generator
-        </button>
-      <button  className={activeTab === "chat" ? "active" : ""}
-      onClick={() => handleTabChange("chat")}>
-        Ask AI
-        </button>
-      <button  className={activeTab === "recipe-generator" ? "active" : ""}
-      onClick={() => handleTabChange("recipe-generator")}>
-        Recipe Generator
-        </button>
+      {/* Navigation */}
+      <nav className="tabs">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            className={activeTab === tab.id ? 'active' : ''}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </nav>
 
-        <div>
-          {activeTab === "image-generator" && <ImageGenerator />}
-          {activeTab === "chat" && <ChatComponent />}
-          {activeTab === "recipe-generator" && <RecipeGenerator />}
-          </div>
-     
+      {/* Content */}
+      <div className="tab-content">
+        {tabs.find((tab) => tab.id === activeTab)?.component}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
